@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Board } from "./components/board";
 import { History } from "./components/History";
+import { StatusMessage } from "./components/StatusMessage";
 import "./components/root.scss";
 import { calculateWinner } from "./helpers";
 const App = () => {
@@ -12,9 +13,7 @@ const App = () => {
     console.log(current);
   }, [current]);
   const winner = calculateWinner(current.board);
-  const message = winner
-    ? `Winner is ${winner}`
-    : `Next Player is ${current.isXNext ? "X" : "O"}`;
+
   const handleOnClick = (position) => {
     if (current.board[position] || winner) {
       return;
@@ -40,7 +39,7 @@ const App = () => {
   return (
     <div className="app">
       <h1>TIC TAC TOE</h1>
-      <h2>{message}</h2>
+      <h2><StatusMessage winner={winner} current={current}/></h2>
       <Board board={current.board} handleOnClick={handleOnClick} />
       <History history={history} moveTo={moveTo} CurrentMove={CurrentMove}/>
     </div>
