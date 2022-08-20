@@ -5,13 +5,9 @@ import "./components/root.scss";
 import { calculateWinner } from "./helpers";
 const App = () => {
   const [history, setHistory] = useState([{board:Array(9).fill(null),isXNext:true}]);
+  //const [isXNext, setisXNext] = useState(true);
   const [CurrentMove, setCurrentMove] = useState(0)
   const current=history[CurrentMove]
-  let [trackmove,settrackmove]=useState(0)
-  useEffect(() => {
-    setCurrentMove(trackmove);
-    
-  }, [trackmove])
   useEffect(() => {
     console.log(current);
   }, [current]);
@@ -23,10 +19,10 @@ const App = () => {
     if (current.board[position] || winner) {
       return;
     }
-    setCurrentMove(trackmove);
+    setCurrentMove()
     setHistory((prev) => {
       const last=prev[prev.length-1];
-
+      setCurrentMove(prev.length)
       const newboard = last.board.map((square, pos) => {
         if (pos === position) {
           return last.isXNext ? "X" : "O";
@@ -35,10 +31,7 @@ const App = () => {
       });
       return prev.concat({board:newboard,isXNext:!last.isXNext});
     });
-    settrackmove((pre)=>pre+1);
-  
-    
-   // setCurrentMove(trackmove);
+    setCurrentMove((prevMove) => prevMove+1);
   };
   const moveTo=(move)=>{
     setCurrentMove(move)
@@ -49,7 +42,7 @@ const App = () => {
       <h1>TIC TAC TOE</h1>
       <h2>{message}</h2>
       <Board board={current.board} handleOnClick={handleOnClick} />
-      <History history={history} moveTo={moveTo}/>
+      <History history={history} moveTo={moveTo} CurrentMove={CurrentMove}/>
     </div>
   );
 };
