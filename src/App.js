@@ -45,6 +45,7 @@ const App = () => {
   return (
     <div className="app">
       <h1>TIC<span className="text-green"> TAC</span> TOE</h1>
+      <h2>BY<span className="text-green"> PARM</span> SOHI</h2>
       <h2><StatusMessage winner={winner} current={current}/></h2>
       <Board board={current.board} handleOnClick={handleOnClick} winingsequence={winingsequence} />
       <button type="button" className={`btn-reset ${winner && 'active'}`} onClick={onNewGame}>Start New Game</button>
